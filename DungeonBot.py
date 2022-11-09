@@ -1,4 +1,5 @@
 import discord, logging, json
+from src.DiscordOppHelper import DiscordOppHelper as opp
 from numpy.random import default_rng
 from discord.ext import commands
 
@@ -6,9 +7,9 @@ from discord.ext import commands
 logging.basicConfig(level=logging.INFO)
 
 #Sets intents for discord server
-#IMPORTANT: Requires guild_members and message_contents permissions to be
-# enabled on the discord developer portal
-intents = discord.Intents(messages=True, message_content=True, guilds=True, members=True)
+#IMPORTANT: Requires presence, guild_members, and message_contents permissions
+# to be enabled on the discord developer portal
+intents = discord.Intents.all()
 
 #Initialize discord bot via discord ext commands interface
 bot = commands.Bot(command_prefix='!', intents=intents)
@@ -24,13 +25,15 @@ async def on_ready():
 
 @bot.command()
 async def roll(ctx, arg:str):
-    """Let's you roll any die (d2-d20) up to 4 times in the format NdN"""
+    """Let's you roll any die (d2-d100) up to 4 times in the format NdN"""
     #Tuple containing accepted dice values
     dice:tuple = ('2','4','6','8','10','12','20','100')
 
-    #Initializes roll data values
-    total:int = 0
+    #Initializes display message
     msg:str = ""
+
+    #stores author data for use in DiscordOppHelper embed generator
+    author = ctx.author
 
     try:
         #Formats the argument passed by client
@@ -46,11 +49,7 @@ async def roll(ctx, arg:str):
             if numberOfDice > 0:
                 if numberOfDice > 6:
                     numberOfDice = 6
-                    msg += "Only 6 dice may be rolled!"
-
-                #Displays the number and type of dice
-                msg += f"Rolling {numberOfDice}d{dieType}:"
-
+                    msg += "**Only 6 die may be rolled!**"
                 #Initialize NumPy Random Number Generator
                 ran = default_rng()
                 #Generates a set of random numbers for the dice rolls
@@ -62,23 +61,18 @@ async def roll(ctx, arg:str):
                 #Formats sum display
                 msg += f"\n{'-':-^10}\nTotal: {sum(rolls)}"
 
-                #Creates Embed msg to display on client
+                #Creates and displays an embed message to discord client
                 title = f"Rolling {numberOfDice}d{dieType}:"
-                embedVar = discord.Embed(title=title,description=msg,colour=discord.Colour.green())
-                print(1)
-                #Collects author name and profile image for display
-                auth = ctx.author.display_name
-                img = ctx.message.author.avatar_url
-                print(3)
-                embedVar.set_author(name=auth, icon_url=img)
-                print(4)
-                await ctx.send(embed=embedVar)
+                await ctx.send(embed=opp.embedGenUserDisplay(
+                    auth=author,title=title,msg=msg,color=discord.Colour.green()
+                ))
             else:
                 raise Exception
         else:
             raise Exception
     except:
         await ctx.send("Must roll in form NdN and be an existing dice! (Only up to 6 die)")
+    
 
 
 def main():
