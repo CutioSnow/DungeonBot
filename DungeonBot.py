@@ -73,8 +73,6 @@ async def roll(ctx, arg:str):
     except:
         await ctx.send("Must roll in form NdN and be an existing dice! (Only up to 6 die)")
     
-
-
 def main():
     #Activate bot via Private TOKEN. Method varies based on needs
     #For this version, the TOKEN constent is stored in a private JSON file
