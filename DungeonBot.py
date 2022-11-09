@@ -6,7 +6,9 @@ from discord.ext import commands
 logging.basicConfig(level=logging.INFO)
 
 #Sets intents for discord server
-intents = discord.Intents(messages=True, message_content=True, guilds=True)
+#IMPORTANT: Requires guild_members and message_contents permissions to be
+# enabled on the discord developer portal
+intents = discord.Intents(messages=True, message_content=True, guilds=True, members=True)
 
 #Initialize discord bot via discord ext commands interface
 bot = commands.Bot(command_prefix='!', intents=intents)
@@ -61,13 +63,15 @@ async def roll(ctx, arg:str):
                 msg += f"\n{'-':-^10}\nTotal: {sum(rolls)}"
 
                 #Creates Embed msg to display on client
-                embedVar = discord.Embed(title=f"Rolling {numberOfDice}d{dieType}:",description=msg,colour=discord.Colour.green())
-
+                title = f"Rolling {numberOfDice}d{dieType}:"
+                embedVar = discord.Embed(title=title,description=msg,colour=discord.Colour.green())
+                print(1)
                 #Collects author name and profile image for display
                 auth = ctx.author.display_name
                 img = ctx.message.author.avatar_url
+                print(3)
                 embedVar.set_author(name=auth, icon_url=img)
-
+                print(4)
                 await ctx.send(embed=embedVar)
             else:
                 raise Exception
