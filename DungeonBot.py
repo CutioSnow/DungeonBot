@@ -1,5 +1,5 @@
 import discord, logging, json
-
+from numpy.random import default_rng
 from discord.ext import commands
 
 #Initialize logging information
@@ -21,8 +21,61 @@ async def on_ready():
     print(f"Logged in as\n{bot.user.name}\n{bot.user.id}\n{'-':-^10}")
 
 @bot.command()
-async def roll(ctx):
-    print('test')
+async def roll(ctx, arg:str):
+    """Let's you roll any die (d2-d20) up to 4 times in the format NdN"""
+    #Tuple containing accepted dice values
+    dice:tuple = ('2','4','6','8','10','12','20','100')
+
+    #Initializes roll data values
+    total:int = 0
+    msg:str = ""
+
+    try:
+        #Formats the argument passed by client
+        data = arg.split('d')
+
+        #Ensures arg represents an accepted die type otherwise throws an Exception
+        if data[1] in dice:
+            #Initializes dice roll count and die type as integer values
+            numberOfDice = int(data[0])
+            dieType = int(data[1])
+            #Checks that no more than 6 die are being rolled
+            #If greater than 6 die will inform the user only 6 will be rolled
+            if numberOfDice > 0:
+                if numberOfDice > 6:
+                    numberOfDice = 6
+                    msg += "Only 6 dice may be rolled!"
+
+                #Displays the number and type of dice
+                msg += f"Rolling {numberOfDice}d{dieType}:"
+
+                #Initialize NumPy Random Number Generator
+                ran = default_rng()
+                #Generates a set of random numbers for the dice rolls
+                rolls:list = ran.integers(low=1,high=dieType+1,size=numberOfDice)
+                print(rolls)
+                #Formats roll message
+                for i in rolls:
+                    msg += f"\nRoll: {i}"
+                #Formats sum display
+                msg += f"\n{'-':-^10}\nTotal: {sum(rolls)}"
+
+                #Creates Embed msg to display on client
+                embedVar = discord.Embed(title=f"Rolling {numberOfDice}d{dieType}:",description=msg,colour=discord.Colour.green())
+
+                #Collects author name and profile image for display
+                auth = ctx.author.display_name
+                img = ctx.message.author.avatar_url
+                embedVar.set_author(name=auth, icon_url=img)
+
+                await ctx.send(embed=embedVar)
+            else:
+                raise Exception
+        else:
+            raise Exception
+    except:
+        await ctx.send("Must roll in form NdN and be an existing dice! (Only up to 6 die)")
+
 
 def main():
     #Activate bot via Private TOKEN. Method varies based on needs
