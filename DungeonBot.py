@@ -52,7 +52,7 @@ async def roll(ctx, arg:str):
                     msg += "**Only 6 die may be rolled!**"
                 #Initialize NumPy Random Number Generator
                 ran = default_rng()
-                #Generates a set of random numbers for the dice rolls
+                #Generates a set of random numbers to represent the dice rolls
                 rolls:list = ran.integers(low=1,high=dieType+1,size=numberOfDice)
                 print(rolls)
                 #Formats roll message
