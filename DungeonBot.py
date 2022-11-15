@@ -37,7 +37,7 @@ async def roll(ctx, arg:str):
 
     try:
         #Formats the argument passed by client
-        data = arg.split('d')
+        data = arg.capitalize().split('D')
 
         #Ensures arg represents an accepted die type otherwise throws an Exception
         if data[1] in dice:
