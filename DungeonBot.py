@@ -1,6 +1,6 @@
 import discord, logging, json
 from src.DiscordOppHelper import DiscordOppHelper as opp
-from numpy.random import default_rng
+from numpy.random import default_rng,SFC64, PCG64DXSM
 from discord.ext import commands
 
 #Initialize logging information
@@ -36,14 +36,13 @@ async def roll(ctx, arg:str):
     author = ctx.author
 
     try:
-        #Formats the argument passed by client
-        data = arg.capitalize().split('D')
+        #Formats the argument passed by client to seperate roll and die data
+        data = arg.upper().split('D')
 
         #Ensures arg represents an accepted die type otherwise throws an Exception
         if data[1] in dice:
             #Initializes dice roll count and die type as integer values
-            numberOfDice = int(data[0])
-            dieType = int(data[1])
+            numberOfDice,dieType = int(data[0]), int(data[1])
             #Checks that no more than 6 die are being rolled
             #If greater than 6 die will inform the user only 6 will be rolled
             if numberOfDice > 0:
@@ -51,7 +50,7 @@ async def roll(ctx, arg:str):
                     numberOfDice = 6
                     msg += "**Only 6 die may be rolled!**"
                 #Initialize NumPy Random Number Generator
-                ran = default_rng()
+                ran = default_rng(PCG64DXSM())
                 #Generates a set of random numbers to represent the dice rolls
                 rolls:list = ran.integers(low=1,high=dieType+1,size=numberOfDice)
                 print(rolls)
