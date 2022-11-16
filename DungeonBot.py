@@ -1,5 +1,6 @@
 import discord, logging, json
 from src.DiscordOppHelper import DiscordOppHelper as opp
+from numpy import ndarray
 from numpy.random import default_rng,SFC64, PCG64DXSM
 from discord.ext import commands
 
@@ -52,8 +53,7 @@ async def roll(ctx, arg:str):
                 #Initialize NumPy Random Number Generator
                 ran = default_rng(PCG64DXSM())
                 #Generates a set of random numbers to represent the dice rolls
-                rolls:list = ran.integers(low=1,high=dieType+1,size=numberOfDice)
-                print(rolls)
+                rolls:ndarray = ran.integers(low=1,high=dieType+1,size=numberOfDice)
                 #Formats roll message
                 for i in rolls:
                     msg += f"\nRoll: {i}"
