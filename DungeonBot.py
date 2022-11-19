@@ -19,7 +19,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 async def on_ready():
     """
     Displays connection information in the terminal when the client finishes
-    preparing the data recieved from the Discord Server
+    preparing the data received from the Discord Server
     """
     #Display login information
     print(f"Logged in as\n{bot.user.name}\n{bot.user.id}\n{'-':-^10}")
@@ -37,7 +37,7 @@ async def roll(ctx, arg:str):
     author = ctx.author
 
     try:
-        #Formats the argument passed by client to seperate roll and die data
+        #Formats the argument passed by client to separate roll and die data
         data = arg.upper().split('D')
 
         #Ensures arg represents an accepted die type otherwise throws an Exception
@@ -51,7 +51,8 @@ async def roll(ctx, arg:str):
                     numberOfDice = 6
                     msg += "**Only 6 die may be rolled!**"
                 #Generates a set of random numbers to represent the dice rolls
-                rolls:ndarray = rng.randomIntDefault(low=1,high=dieType,size=numberOfDice)
+                rolls:ndarray = rng.randomInt(low=1,high=dieType,size=numberOfDice)
+                print(f"Generated rolls: {rolls}")
                 #Formats roll message
                 for i in rolls:
                     msg += f"\nRoll: {i}"
@@ -59,6 +60,7 @@ async def roll(ctx, arg:str):
                 msg += f"\n{'-':-^10}\nTotal: {sum(rolls)}"
                 #Creates and displays an embed message to discord client
                 title = f"Rolling {numberOfDice}d{dieType}:"
+                await ctx.message.delete() #Deletes authors command
                 await ctx.send(embed=opp.embedGenUserDisplay(
                     auth=author,title=title,msg=msg,color=discord.Colour.green()
                 ))
@@ -71,7 +73,7 @@ async def roll(ctx, arg:str):
     
 def main():
     #Activate bot via Private TOKEN. Method varies based on needs
-    #For this version, the TOKEN constent is stored in a private JSON file
+    #For this version, the TOKEN constant is stored in a private JSON file
     file = open("./.token/token.json",'r')
     data = json.load(file)
     file.close()
