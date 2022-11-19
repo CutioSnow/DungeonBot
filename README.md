@@ -6,9 +6,9 @@ Must have a uniquie discord bot token. In this version, the token was mapped wit
 
 This bot was built using Python 3.10.6 within a virtual environment. Activate venv in,
 Ubuntu:
- - >source env/bin/activate
- - >python3 DungeonBot.py
- - To terminate: >deactivate
+ - ```source env/bin/activate```
+ - ```python3 DungeonBot.py```
+ - To terminate: ```deactivate```
 For other operating systems you must reconstruct the venv or run on your full install of python
 
 # Package Requirements
