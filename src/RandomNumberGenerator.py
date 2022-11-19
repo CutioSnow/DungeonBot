@@ -25,7 +25,6 @@ class RandomNumberGenerator:
             set: Set of random Integers contained in a NumPy.ndarray
         '''
         #Initialize the Default NumPy random number generator
-        #TODO: Write documentation https://www.geeksforgeeks.org/python-lists-vs-numpy-arrays/
         rng = random.default_rng()
         #Generates a set of random Integers of a defined size
         set:ndarray = rng.integers(low=low,high=high+1,size=size)
