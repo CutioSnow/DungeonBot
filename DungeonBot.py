@@ -1,6 +1,7 @@
 import discord, logging, json
 from src.DiscordOppHelper import DiscordOppHelper as opp
-from numpy.random import default_rng
+from src.RandomNumberGenerator import RandomNumberGenerator as rng
+from numpy import ndarray
 from discord.ext import commands
 
 #Initialize logging information
@@ -18,7 +19,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 async def on_ready():
     """
     Displays connection information in the terminal when the client finishes
-    preparing the data recieved from the Discord Server
+    preparing the data received from the Discord Server
     """
     #Display login information
     print(f"Logged in as\n{bot.user.name}\n{bot.user.id}\n{'-':-^10}")
@@ -36,33 +37,30 @@ async def roll(ctx, arg:str):
     author = ctx.author
 
     try:
-        #Formats the argument passed by client
-        data = arg.split('d')
+        #Formats the argument passed by client to separate roll and die data
+        data = arg.upper().split('D')
 
         #Ensures arg represents an accepted die type otherwise throws an Exception
         if data[1] in dice:
             #Initializes dice roll count and die type as integer values
-            numberOfDice = int(data[0])
-            dieType = int(data[1])
+            numberOfDice,dieType = int(data[0]), int(data[1])
             #Checks that no more than 6 die are being rolled
             #If greater than 6 die will inform the user only 6 will be rolled
             if numberOfDice > 0:
                 if numberOfDice > 6:
                     numberOfDice = 6
                     msg += "**Only 6 die may be rolled!**"
-                #Initialize NumPy Random Number Generator
-                ran = default_rng()
                 #Generates a set of random numbers to represent the dice rolls
-                rolls:list = ran.integers(low=1,high=dieType+1,size=numberOfDice)
-                print(rolls)
+                rolls:ndarray = rng.randomInt(low=1,high=dieType,size=numberOfDice)
+                print(f"Generated rolls: {rolls}")
                 #Formats roll message
                 for i in rolls:
                     msg += f"\nRoll: {i}"
                 #Formats sum display
                 msg += f"\n{'-':-^10}\nTotal: {sum(rolls)}"
-
                 #Creates and displays an embed message to discord client
                 title = f"Rolling {numberOfDice}d{dieType}:"
+                await ctx.message.delete() #Deletes authors command
                 await ctx.send(embed=opp.embedGenUserDisplay(
                     auth=author,title=title,msg=msg,color=discord.Colour.green()
                 ))
@@ -75,7 +73,7 @@ async def roll(ctx, arg:str):
     
 def main():
     #Activate bot via Private TOKEN. Method varies based on needs
-    #For this version, the TOKEN constent is stored in a private JSON file
+    #For this version, the TOKEN constant is stored in a private JSON file
     file = open("./.token/token.json",'r')
     data = json.load(file)
     file.close()
