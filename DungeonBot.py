@@ -1,7 +1,7 @@
 import discord, logging, json
 from src.DiscordOppHelper import DiscordOppHelper as opp
+from src.RandomNumberGenerator import RandomNumberGenerator as rng
 from numpy import ndarray
-from numpy.random import default_rng,SFC64, PCG64DXSM
 from discord.ext import commands
 
 #Initialize logging information
@@ -50,16 +50,13 @@ async def roll(ctx, arg:str):
                 if numberOfDice > 6:
                     numberOfDice = 6
                     msg += "**Only 6 die may be rolled!**"
-                #Initialize NumPy Random Number Generator
-                ran = default_rng(PCG64DXSM())
                 #Generates a set of random numbers to represent the dice rolls
-                rolls:ndarray = ran.integers(low=1,high=dieType+1,size=numberOfDice)
+                rolls:ndarray = rng.randomIntDefault(low=1,high=dieType,size=numberOfDice)
                 #Formats roll message
                 for i in rolls:
                     msg += f"\nRoll: {i}"
                 #Formats sum display
                 msg += f"\n{'-':-^10}\nTotal: {sum(rolls)}"
-
                 #Creates and displays an embed message to discord client
                 title = f"Rolling {numberOfDice}d{dieType}:"
                 await ctx.send(embed=opp.embedGenUserDisplay(

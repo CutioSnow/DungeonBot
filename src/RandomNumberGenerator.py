@@ -32,11 +32,12 @@ class RandomNumberGenerator:
         #returns the set of generated Integers
         return set
 
-    def randomIntWeightedHigh(low:int,high:int,size:int) -> ndarray:
+    #TODO: Create normal distribution method
+    #def randomIntNormalDistribution(low:int,high:int,size:int) -> ndarray:
         '''
-        The randomIntWeightedHigh method generates a set of random integers in 
-        a specified range (inclusive) and size weighted to prefer higher valued
-        integers (i.e. low=1 and high=20 will favor values >10).
+        The randomIntNormalDistribution method generates a set of random integers 
+        in a specified range (inclusive) and size that follow a normal 
+        distribution.
 
         Parameters:
             low: Lowest value in the generated range (inclusive)
@@ -46,9 +47,9 @@ class RandomNumberGenerator:
         Returns:
             set: Weighted set of random Integers in a NumPy.ndarray
         '''
-        #Initializes list to contain generated random numbers
-        
-
-    def weightGenerate():
-        ''''''
-
+        #Median value of generated numbers
+        median:float = high/2
+        #Initialize the Default NumPy random number generator
+        rng = random.default_rng().standard_normal(0,0.1)
+        #Generates a set of random floats within the range with a normal 
+        #distribution
