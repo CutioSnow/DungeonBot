@@ -9,6 +9,7 @@ Ubuntu:
  - ```source env/bin/activate```
  - ```python3 DungeonBot.py```
  - To terminate: ```deactivate```
+
 For other operating systems you must reconstruct the venv or run on your full install of python
 
 # Package Requirements
