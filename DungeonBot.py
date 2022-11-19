@@ -26,7 +26,12 @@ async def on_ready():
 
 @bot.command()
 async def roll(ctx, arg:str):
-    """Let's you roll any die (d2-d100) up to 4 times in the format NdN"""
+    """
+    Accepts user argument in the form NdN, where N1 represents the number of 
+    dice the user wishes to roll and N2 represents the type of die being rolled
+    (d2-d100). One to six die values are generated and displayed in the client 
+    with a calculated total.
+    """
     #Tuple containing accepted dice values
     dice:tuple = ('2','4','6','8','10','12','20','100')
 
