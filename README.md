@@ -22,3 +22,6 @@ Dungeon;Bot utilizes the discord.ext.commands package to generate a set of comma
 
 # RandomNumberGenerator Class
 Provides organized and simplified utilities for generating random numbers using both the python built-in random class and the default NumPy random number generator. All sets of random numbers are returned and operated on within NumPy Arrays. NumPy Arrays have been shown to have various advantages over lists, including lower memory demands and faster computation speeds. 
+
+# Dungeon-Bot-v0.1.1-alpha
+The intents of this update are to create an initiative order tool and a formal help command 
