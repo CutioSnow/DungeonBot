@@ -4,17 +4,11 @@ Dungeon;Bot provides a powerful toolset to assist in remote play for RPG's such 
 # Requirements
 Must have a uniquie discord bot token. In this version, the token was mapped within the main method of the DungeonBot.py file using a secret .json file called token.json.
 
-This bot was built using Python 3.10.6 within a virtual environment. Activate venv in,
-Ubuntu:
- - ```source env/bin/activate```
- - ```python3 DungeonBot.py```
- - To terminate: ```deactivate```
-
-For other operating systems you must reconstruct the venv or run on your full install of python
+This bot was built using Python 3.10.6 within a virtual environment. To use this bot, you must run the ```DungeonBot.py``` file within a virtual environment or opperating system with all the required packages installed.
 
 # Package Requirements
  - discord.py
- - NumPy
+ - NumPy - Copyright (c) 2005-2022, NumPy Developers. All rights reserved.
  
 # Discord Client Commands
 Dungeon;Bot utilizes the discord.ext.commands package to generate a set of commands that interact with the discord client based on various user inputs. The current command list is as follows:
