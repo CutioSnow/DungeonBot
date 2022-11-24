@@ -14,9 +14,7 @@ For other operating systems you must reconstruct the venv or run on your full in
 
 # Package Requirements
  - discord.py
- - NumPy
- Copyright (c) 2005-2022, NumPy Developers.
- All rights reserved.
+ - NumPy - Copyright (c) 2005-2022, NumPy Developers. All rights reserved.
  
 # Discord Client Commands
 Dungeon;Bot utilizes the discord.ext.commands package to generate a set of commands that interact with the discord client based on various user inputs. The current command list is as follows:
