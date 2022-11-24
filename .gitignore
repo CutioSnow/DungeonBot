@@ -1,3 +1,4 @@
 .token
 run.sh
 src/__pycache__
+env
