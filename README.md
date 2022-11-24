@@ -4,13 +4,7 @@ Dungeon;Bot provides a powerful toolset to assist in remote play for RPG's such 
 # Requirements
 Must have a uniquie discord bot token. In this version, the token was mapped within the main method of the DungeonBot.py file using a secret .json file called token.json.
 
-This bot was built using Python 3.10.6 within a virtual environment. Activate venv in,
-Ubuntu:
- - ```source env/bin/activate```
- - ```python3 DungeonBot.py```
- - To terminate: ```deactivate```
-
-For other operating systems you must reconstruct the venv or run on your full install of python
+This bot was built using Python 3.10.6 within a virtual environment. To use this bot, you must run the ```DungeonBot.py``` file within a virtual environment or opperating system with all the required packages installed.
 
 # Package Requirements
  - discord.py
@@ -22,3 +16,6 @@ Dungeon;Bot utilizes the discord.ext.commands package to generate a set of comma
 
 # RandomNumberGenerator Class
 Provides organized and simplified utilities for generating random numbers using both the python built-in random class and the default NumPy random number generator. All sets of random numbers are returned and operated on within NumPy Arrays. NumPy Arrays have been shown to have various advantages over lists, including lower memory demands and faster computation speeds. 
+
+# Dungeon-Bot-v0.1.1-alpha
+The intents of this update are to create an initiative order tool and a formal help command 
