@@ -77,14 +77,11 @@ async def roll(ctx, arg:str):
         await ctx.send("Must roll in form NdN and be an existing dice! (Only up to 6 die)")
     
 def main():
-    #Activate bot via Private TOKEN. Method varies based on needs
+    #Attempts to activate bot via Private TOKEN. Method varies based on needs
     #For this version, the TOKEN constant is stored in a private JSON file
-    file = open("./.token/token.json",'r')
-    data = json.load(file)
-    file.close()
-
-    #Connect Bot using above config
     try:
+        with open("./.token/token.json") as f:
+            data = json.load(f)
         bot.run(data['TOKEN'])
     except:
         print("ERROR: Invalid token entry")
